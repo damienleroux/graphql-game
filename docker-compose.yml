@@ -1,0 +1,57 @@
+version: "3.8"
+
+services:
+
+  game:
+    build: 
+      context: ./applications/game
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      SERVER_HOSTNAME: 0.0.0.0
+      SERVER_PORT: 80
+      PGUSER: postgres
+      PGHOST: postgres
+      PGPASSWORD: pwd
+      PGDATABASE: game
+      PGPORT: 5432
+      MOVIE_HOSTNAME: movie
+      MOVIE_PORT: 80
+    ports:
+      - 8083:80
+    depends_on:
+    - postgres 
+    - movie
+
+  movie:
+    build: 
+      context: ./applications/movie
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      SERVER_HOSTNAME: 0.0.0.0
+      SERVER_PORT: 80
+      THEMOVIEDB_API_KEY: ${THEMOVIEDBAPIKEY}
+    ports:
+      - 8082:80
+    depends_on:
+    - postgres 
+
+  postgres:
+    image: postgres:12.3-alpine
+    restart: always
+    volumes:
+      - ./applications/game/repository/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      POSTGRES_DB: game
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pwd
+    ports:
+      # to remove. Added to debug purpose
+      - 8081:5432 
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 1s
+      timeout: 10s
+      retries: 10
+      start_period: 40s
