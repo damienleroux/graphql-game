@@ -162,9 +162,9 @@ You'll get:
 
 ## improvements
 
-[] add a random complexz string as unique game session `id` to avoid game hacking
-[] Add a `score` application to handle game results
-[] Create a client within the `movie` application to be used by `game` application. This requires to publish the client as an `npm` module. This will ensure to abstract the transport layer from `game` application
-[] Use TypeScript to let the `routes` and `usecase` implement the `repository` and `service` requested interface. Cf. hexagonal archi
-[] Use Lerna to ease dependency management
-[] Improve test coverage. For now, this repository is not for production purpose.
+- [ ] add a random complexz string as unique game session `id` to avoid game hacking
+- [ ] Add a `score` application to handle game results
+- [ ] Create a client within the `movie` application to be used by `game` application. This requires to publish the client as an `npm` module. This will ensure to abstract the transport layer from `game` application
+- [ ] Use TypeScript to let the `routes` and `usecase` implement the `repository` and `service` requested interface. Cf. hexagonal archi
+- [ ] Use Lerna to ease dependency management
+- [ ] Improve test coverage. For now, this repository is not for production purpose.
